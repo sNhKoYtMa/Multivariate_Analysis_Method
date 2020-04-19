@@ -1,7 +1,7 @@
 # 多変量解析法 (Multivariate Analysis Method)
-TAでstatworksを用いて教えた範囲をRで書いてみた<br>
-個人的な多変量解析の備忘録<br>
-気が向いたらPythonでも実装しようと思う<br>
+TAでstatworksを用いて教えた範囲をRで書いてみた．<br>
+教科書にはコードがないので，個人的に書いて多変量解析の備忘録に利用する用．<br>
+気が向いたらPythonでも実装しようと思う．<br>
 [多変量解析法入門 永田靖・棟近雅彦 著](https://www.saiensu.co.jp/search/?isbn=978-4-7819-0980-6&y=2001#detail)<br>
 
 ## 目次
