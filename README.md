@@ -1,5 +1,5 @@
 # 多変量解析法 (Multivariate Analysis Method)
-TAでstatworksを用いて教えた範囲をRで書いてみた．<br>
+2019年のTAでstatworksを用いて教えた範囲をRで書いてみた．<br>
 教科書にはコードがないので，個人的に書いて多変量解析の備忘録に利用する用．<br>
 気が向いたらPythonでも実装しようと思う．<br>
 [多変量解析法入門 永田靖・棟近雅彦 著](https://www.saiensu.co.jp/search/?isbn=978-4-7819-0980-6&y=2001#detail)<br>
@@ -19,4 +19,4 @@ TAでstatworksを用いて教えた範囲をRで書いてみた．<br>
 第12章：クラスター分析 → [ch12.R](https://github.com/sNhKoYtMa/Multivariate_Analysis_Method/blob/master/R/ch12.R)<br>
 第13章：その他の方法 → TAの領域外<br>
 
-※実行していない章(10,11,13)は、気が向いたらやる
+※実行していない章(10,11,13)は，気が向いたらやる
