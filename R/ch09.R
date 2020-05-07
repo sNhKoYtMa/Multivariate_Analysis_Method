@@ -19,42 +19,42 @@ data # 表9.1 試験の成績のデータ
 scatter_plot1 <- data %>% 
   ggplot(aes(x = x1, y = x2)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x1とx2)') +
+  ggtitle('図9.1 x1とx2の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot2 <- data %>% 
   ggplot(aes(x = x1, y = x3)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x1とx3)') +
+  ggtitle('図9.1 x1とx3の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot3 <- data %>% 
   ggplot(aes(x = x1, y = x4)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x1とx4)') +
+  ggtitle('図9.1 x1とx4の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot4 <- data %>% 
   ggplot(aes(x = x2, y = x3)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x2とx3)') +
+  ggtitle('図9.1 x2とx3の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot5 <- data %>% 
   ggplot(aes(x = x2, y = x4)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x2とx4)') +
+  ggtitle('図9.1 x2とx4の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot6 <- data %>% 
   ggplot(aes(x = x3, y = x4)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図9.1 散布図(x3とx4)') +
+  ggtitle('図9.1 x3とx4の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
@@ -78,7 +78,8 @@ pca_loadings # 固有ベクトル
 summary(pca) # 寄与率や累積寄与率
 screeplot(pca) # 寄与率可視化
 
-factor_loadings <- t(sapply(1:NCOL(data),function(i) pca_sdev[i] * pca_loadings[,i]))
+factor_loadings <- t(sapply(1:NCOL(data),function(i) {
+  return(pca_sdev[i] * pca_loadings[,i])}))
 factor_loadings # 表9.2 因子負荷量
 
 pca_scores <- pca$scores # 主成分得点
@@ -121,3 +122,11 @@ scatter_pca_scores <- pca_scores %>%
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_pca_scores # 図9.3 主成分得点の散布図
 
+ggsave(file = '図09.1 x1とx2の散布図.png', plot = scatter_plot1)
+ggsave(file = '図09.1 x1とx3の散布図.png', plot = scatter_plot2)
+ggsave(file = '図09.1 x1とx4の散布図.png', plot = scatter_plot3)
+ggsave(file = '図09.1 x2とx3の散布図.png', plot = scatter_plot4)
+ggsave(file = '図09.1 x2とx4の散布図.png', plot = scatter_plot5)
+ggsave(file = '図09.1 x3とx4の散布図.png', plot = scatter_plot6)
+ggsave(file = '図09.2 因子負荷量と散布図.png', plot = scatter_factor_loadings)
+ggsave(file = '図09.3 主成分得点の散布図.png', plot = scatter_pca_scores)
