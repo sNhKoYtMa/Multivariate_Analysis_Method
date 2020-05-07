@@ -32,7 +32,7 @@ k <- 3 #クラスター数
 cutdata <- cutree(hc, k = k)
 hcc <- length(hc$height)
 cutline <- (hc$height[hcc - (k - 2)] + hc$height[hcc - (k - 1)]) / 2
-png('図12.7 表12.1のデータのデンドログラム.png', width = 606, height = 480)
+png('図12.7 表12.1のデータのデンドログラム.png', width = 1800, height = 1200)
 plot(hc, hang = -1, xlab = '', ylab = 'dist')
 abline(h = cutline, lty = 4) # 図12.7 表12.1のデータのデンドログラム
 dev.off()
