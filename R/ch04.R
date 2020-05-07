@@ -75,3 +75,7 @@ reg_diag_xsr <- xsr %>%
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 reg_diag_xsr # 図4.5
+
+ggsave(file = '図04.1 散布図.png', plot = simple_reg_plot)
+ggsave(file = '図04.4 標準化残差とテコ比の散布図.png', plot = reg_diag_srlev)
+ggsave(file = '図04.5 xと標準化残差の散布図.png', plot = reg_diag_xsr)
