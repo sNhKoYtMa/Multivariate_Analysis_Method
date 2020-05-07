@@ -13,9 +13,12 @@ data <- data.frame(x = x,
 data # 表4.1 成分Aの含有量xと収率yのデータ
 
 # 単回帰
-simple_reg <- lm(data = data, formula = y ~ x)
+simple_reg <- data %>% 
+  lm(data = ., formula = y ~ x)
 summary(simple_reg)
-simple_reg_coef <- tidy(simple_reg)
+anova(simple_reg)
+simple_reg_coef <- simple_reg %>% 
+  tidy()
 simple_reg_coef # 偏回帰係数
 
 # 単回帰可視化 (図4.1 散布図)
@@ -34,13 +37,15 @@ simple_reg_plot <- data %>%
 simple_reg_plot # 図4.1
 
 # 回帰診断
-sr <- rstandard(simple_reg)
-leverage <- hat(x)
-threshold <- 2.5*(1+(NCOL(data)-1))/NROW(data)
+sr <- rstandard(simple_reg) # 標準化残差
+leverage <- hat(x) # テコ比
+threshold <- 2.5*(1+(NCOL(data)-1))/NROW(data) # 閾値
 
 # 回帰診断可視化
 # 図4.4 標準化残差とテコ比の散布図
-reg_diag_srlev <- data %>% 
+srlev <- data.frame(sr = sr,
+                    leverage = leverage)
+reg_diag_srlev <- srlev %>% 
   ggplot(aes(x = sr, y = leverage)) +
   geom_point(size = 2, color = 'blue') +
   xlim(-2, 2) +
@@ -53,11 +58,14 @@ reg_diag_srlev <- data %>%
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 reg_diag_srlev # 図4.4
+
 # 図4.5 xと標準化残差の散布図
-reg_diag_xsr <- data %>% 
+xsr <- data.frame(x = x,
+                  sr = sr)
+reg_diag_xsr <- xsr %>% 
   ggplot(aes(x = x, y = sr)) +
   geom_point(size = 2, color = 'blue') +
-  xlim(0,max(x)) +
+  xlim(0,NA) +
   ylim(-2,2) +
   xlab('x') +
   ylab('Standardized Residuals') +
@@ -67,6 +75,3 @@ reg_diag_xsr <- data %>%
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 reg_diag_xsr # 図4.5
-
-
-
