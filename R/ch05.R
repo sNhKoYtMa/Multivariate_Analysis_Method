@@ -18,21 +18,21 @@ data # 表5.1 中古マンションのデータ
 scatter_plot1 <- data %>% 
   ggplot(aes(x = x1, y = y)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図5.1 散布図(x1とy)') +
+  ggtitle('図5.1 x1とyの散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot2 <- data %>% 
   ggplot(aes(x = x2, y = y)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図5.1 散布図(x2とy)') +
+  ggtitle('図5.1 x2とyの散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
 scatter_plot3 <- data %>% 
   ggplot(aes(x = x1, y = x2)) +
   geom_point(size = 2, color = 'blue') +
-  ggtitle('図5.1 散布図(x1とx2)') +
+  ggtitle('図5.1 x1とx2の散布図') +
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
@@ -41,19 +41,21 @@ scatter_plot2 # 図5.1の右上
 scatter_plot3 # 図5.1の下
 
 # 重回帰分析
-multiple_reg <- lm(data = data, formula = y ~ x1 + x2)
+multiple_reg <- data %>% 
+  lm(data = ., formula = y ~ x1 + x2)
 summary(multiple_reg)
 anova(multiple_reg) # 分散分析
-multiple_reg_coef <- tidy(multiple_reg)
+multiple_reg_coef <- multiple_reg %>% 
+  tidy()
 multiple_reg_coef # 偏回帰係数
 
 # 多重共線性確認
 X <- cbind(x1, x2)
-V <- cov(X) # 標本分散共分散行列
-R <- cor(X) # 標本相関係数行列
-det(V) # 標本分散共分散行列の行列式
-solve(V) # 標本分散共分散行列の逆行列
-eigen(V)$values # 標本分散共分散行列の固有値
+V <- cov(X)
+R <- cor(X)
+det(V)
+solve(V)
+eigen(V)$values
 
 # 回帰診断
 sr <- rstandard(multiple_reg)
@@ -62,7 +64,9 @@ threshold <- 2.5*(1+(NCOL(data)-1))/NROW(data)
 
 # 回帰診断可視化
 # 図5.3 標準化残差とテコ比の散布図
-reg_diag_srlev <- data %>% 
+srlev <- data.frame(sr = sr,
+                    leverage = leverage)
+reg_diag_srlev <- srlev %>% 
   ggplot(aes(x = sr, y = leverage)) +
   geom_point(size = 2, color = 'blue') +
   xlim(-2, 2) +
@@ -77,7 +81,9 @@ reg_diag_srlev <- data %>%
 reg_diag_srlev # 図5.3
 
 # 図5.4 xと標準化残差の散布図
-reg_diag_x1sr <- data %>% 
+xsr <- data.frame(x = X,
+                  sr = sr)
+reg_diag_x1sr <- xsr %>% 
   ggplot(aes(x = x1, y = sr)) +
   geom_point(size = 2, color = 'blue') +
   ylim(-2,2) +
@@ -88,7 +94,7 @@ reg_diag_x1sr <- data %>%
   theme_bw() +
   theme(plot.title = element_text(hjust = 0.5),
         plot.margin = margin(1,1,1,1,'cm'))
-reg_diag_x2sr <- data %>% 
+reg_diag_x2sr <- xsr %>% 
   ggplot(aes(x = x2, y = sr)) +
   geom_point(size = 2, color = 'blue') +
   ylim(-2,2) +
@@ -102,6 +108,11 @@ reg_diag_x2sr <- data %>%
 reg_diag_x1sr # 図5.4の左
 reg_diag_x2sr # 図5.4の右
 
+ggsave(file = '図05.1 x1とyの散布図.png', plot = scatter_plot1)
+ggsave(file = '図05.1 x2とyの散布図.png', plot = scatter_plot2)
+ggsave(file = '図05.1 x1とx2の散布図.png', plot = scatter_plot3)
+ggsave(file = '図05.3 標準化残差とテコ比の散布図.png', plot = reg_diag_srlev)
+ggsave(file = '図05.4 x1と標準化残差の散布図.png', plot = reg_diag_x1sr)
+ggsave(file = '図05.4 x2と標準化残差の散布図.png', plot = reg_diag_x2sr)
+
 # 数値が若干本と違うけどめんどくさいので無視
-
-
